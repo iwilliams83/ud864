@@ -24,17 +24,38 @@ API Course, Lesson 1 -->
        // TODO: Create a single marker appearing on initialize -
        // Create it with the position of the singleLatLng,
        // on the map, and give it your own title!
+       var marker = new google.maps.Marker({
+         position: singleLatLng,
+         map: map,
+         title: 'First Marker!'
+       });
 
        // TODO: create a single infowindow, with your own content.
        // It must appear on the marker
-
+       var singleInfowindow = new google.maps.InfoWindow();
        // TODO: create an EVENT LISTENER so that the infowindow opens when
        // the marker is clicked!
+       marker.addListener('click', function() {
+         populateInfoWindow(this, singleInfowindow);
+       });
+     }
+
+     function populateInfoWindow(marker, infowindow) {
+       // Check to make sure the infowindow is not already opened on this marker.
+       if (infowindow.marker != marker) {
+         infowindow.marker = marker;
+         infowindow.setContent('<div>' + marker.title + '</div>');
+         infowindow.open(map, marker);
+         // Make sure the marker property is cleared if the infowindow is closed.
+         infowindow.addListener('closeclick',function(){
+           infowindow.setMarker = null;
+         });
+       }
      }
    </script>
    <!--TODO: Insert your API Key in the below call to load the API.-->
    <script async defer
-     src="https://maps.googleapis.com/maps/api/js?v=3&key=XXX&callback=initMap">
+     src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD7zkOa6holemorm6dH0Wo7ddZ2gEc_Yvg&callback=initMap">
    </script>
  </body>
 </html>
